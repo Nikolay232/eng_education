@@ -1,0 +1,29 @@
+#!/bin/sh
+
+set -e
+
+case "$1" in
+    configure)
+        NEWUSER=eng_education
+        NEWGROUP=eng_education
+        NEWHOME=/var/lib/eng_education
+        LOG_DIR=/var/log/eng_education
+
+        if ! getent passwd  | grep -q "^${NEWUSER}:"; then
+            echo -n "Adding system user $NEWUSER ..."
+            useradd --system --no-create-home --shell=/bin/false --home-dir=$NEWHOME $NEWUSER
+            echo " done"
+        fi
+
+        install -d -m 0750 -o $NEWUSER -g $NEWGROUP $NEWHOME
+        install -d -m 0750 -o $NEWUSER -g $NEWGROUP $LOG_DIR
+        install -d -m 0750 -o $NEWUSER -g $NEWGROUP $NEWHOME/media
+    ;;
+
+    abort-upgrade|abort-remove|abort-deconfigure|install|upgrade)
+    ;;
+    *)
+        echo "postinst called with unknown argument \`$1'" >&2
+        exit 1
+    ;;
+esac

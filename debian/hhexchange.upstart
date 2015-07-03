@@ -1,0 +1,20 @@
+# eng_education - eng_education job file
+
+description "eng_education web application service"
+
+start on runlevel [2345]
+stop on runlevel [016]
+
+respawn
+respawn limit 10 5
+
+env LANG="C.UTF-8"
+
+env DEFAULTS="/etc/default/eng_education"
+env RUNNER="uwsgi_python"
+
+script
+    set -a
+    . $DEFAULTS
+    PYTHONPATH=/opt/eng_education/embed exec uwsgi_python --http-socket="${LISTEN_HOST}:${LISTEN_PORT}" --module="eng_education.wsgi:application" --die-on-term
+end script

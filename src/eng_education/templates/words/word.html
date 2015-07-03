@@ -1,0 +1,20 @@
+{% extends "index.html" %}
+
+{% block body_content %}
+
+<br>
+  {% for theme in themes %}
+    {{ theme }};
+  {% endfor %}
+  <form name="myForm3" class="profile-form" method="post" action="{% url 'word' pk=word_id   %}" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <p>{{ word.rus }}</p>
+
+    <input name="eng_word" type="text" size="40" autocomplete="off" autofocus>
+
+    <div>
+      <button class="btn btn-primary" type="submit">Подтвердить</button>
+    </div>
+    <br><br><br>
+{% endblock body_content %}

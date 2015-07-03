@@ -1,0 +1,4 @@
+bin/eng_education opt/eng_education/bin
+config/settings.py etc/eng_education
+embed opt/eng_education/
+staticfiles.json usr/share/eng_education-static/

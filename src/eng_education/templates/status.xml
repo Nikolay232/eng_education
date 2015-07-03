@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf8'?>
+<package_info>
+  <project buildtime="{{ package_buildtime }}" version="{{ package_version }}" name="{{ package_name }}">
+    <db-conn>{{ db_status }}</db-conn>
+  </project>
+</package_info>

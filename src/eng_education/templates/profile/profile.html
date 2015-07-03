@@ -1,0 +1,28 @@
+{% extends "index.html" %}
+
+
+{% block body_content %}
+  <h3>User profile</h3>
+  {% if request.user.profile.company.company_type = company_customer_type %}
+    <div><a href="{% url 'orders_list' %}">Список заказов</a></div>
+  {% endif %}
+  <br>
+
+  <div class="row">
+	<div class="col-sm-3">
+		<!--left col-->
+		<ul class="list-group">
+			<li class="list-group-item text-right"><span class="pull-left"><strong class="">Логин</strong></span> {{ request.user.username }}</li>
+			<li class="list-group-item text-right"><span class="pull-left"><strong class="">Имя</strong></span> {{ request.user.first_name }}</li>
+			<li class="list-group-item text-right"><span class="pull-left"><strong class="">Фамилия</strong></span> {{ request.user.last_name }}</li>
+			{% if request.user.profile %}
+			  <li class="list-group-item text-right"><span class="pull-left"><strong class="">Имя компании </strong></span> {{ request.user.profile.company.name }}</li>
+			  <li class="list-group-item text-right"><span class="pull-left"><strong class="">HH_ID </strong></span> {{ request.user.profile.company.hhid }}</li>
+			  <li class="list-group-item text-right"><span class="pull-left"><strong class="">Тип </strong></span> {{ request.user.profile.company.get_company_type_display }}</li>
+			  <li class="list-group-item text-right"><span class="pull-left"><strong class="">Тип КА </strong></span> {{ request.user.profile.company.get_agency_type_display }}</li>
+			{% endif %}
+			
+		</ul>
+	</div>
+  </div>
+{% endblock body_content %}

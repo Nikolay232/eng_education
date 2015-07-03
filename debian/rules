@@ -1,0 +1,55 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+ROOT_DIR = $(shell pwd)
+
+PROJECT_NAME = eng_education
+DEB_DH_INSTALLINIT_ARGS = --no-start
+DEPENDS_DIR_NAME = embed
+SCRIPTS_DIR_NAME = bin
+DEPENDS_DIR_PATH = /opt/$(PROJECT_NAME)/$(DEPENDS_DIR_NAME)
+GENERATED_ENTRYPOINTS_PATH = $(DEPENDS_DIR_NAME)/__entry-points
+
+BUILD_TIME=`date -R`
+MAIN_MODULE_PATH=$(CURDIR)/embed/eng_education/
+MAIN_MODULE_INIT=${MAIN_MODULE_PATH}__init__.py
+
+PY_METADATA_PATH = src/$(PROJECT_NAME).egg-info/
+WRAP_DEB_BIN_PATH = ../../wrap-deb-bin.sh
+
+include /usr/share/cdbs/1/rules/debhelper.mk
+
+clean::
+	rm -rf bin/ build/ dist/ embed/ __static/
+
+build:
+
+	# Setup package metadata
+	python setup.py egg_info
+	date -R > $(PY_METADATA_PATH)X_buildtime
+
+	# Make source distribution
+	python setup.py sdist
+
+	# Install project package and all dependencies
+	mkdir -p $(DEPENDS_DIR_NAME) $(GENERATED_ENTRYPOINTS_PATH)
+	pip install --compile --process-dependency-links \
+	    --target $(DEPENDS_DIR_NAME) \
+	    --install-option="--install-scripts=$(ROOT_DIR)/$(GENERATED_ENTRYPOINTS_PATH)" \
+	    $(CURDIR)/dist/$(PROJECT_NAME)-$(shell python setup.py --version|tr '~' '-').tar.gz
+
+	# Django collectstatic
+	echo "STATIC_ROOT = '__static'\nDEBUG = False" > $(CURDIR)/__buildsettings.py
+	ENG_EDUCATION_SETTINGS_OVERRIDE_PATH=$(CURDIR)/__buildsettings.py PYTHONPATH=$(DEPENDS_DIR_NAME) $(GENERATED_ENTRYPOINTS_PATH)/$(PROJECT_NAME) collectstatic --noinput
+	rm -f $(CURDIR)/__buildsettings.py
+	mv __static/staticfiles.json ./
+
+	# Wrap generated entry-points
+	mkdir -p $(SCRIPTS_DIR_NAME)
+	cd $(GENERATED_ENTRYPOINTS_PATH) && find . -maxdepth 1 -type f -executable |xargs -n1 -I{} $(WRAP_DEB_BIN_PATH) $(DEPENDS_DIR_PATH) /opt/$(PROJECT_NAME)/$(GENERATED_ENTRYPOINTS_PATH)/{} ../../$(SCRIPTS_DIR_NAME)/{}
+
+install/eng_education::
+	# Fix version in setup.py
+	sed -i "s/\(package_name = \).*/\1'$(DEB_SOURCE_PACKAGE)'/" $(MAIN_MODULE_INIT)
+	sed -i "s/\(package_version = \).*/\1'$(DEB_VERSION)'/"  $(MAIN_MODULE_INIT)
+	sed -i "s/\(package_buildtime = \).*/\1'$(BUILD_TIME)'/" $(MAIN_MODULE_INIT)

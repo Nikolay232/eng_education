@@ -1,0 +1,26 @@
+Source: eng_education
+Section: python
+Priority: extra
+Maintainer: Nikolay Kotov (project package signing) <mikola1717@gmail.com>
+Build-Depends:
+    cdbs,
+    python-setuptools (>= 0.6b3),
+    python-pip,
+    python-dev,
+    debhelper (>= 7.4.3),
+    libxml2-dev,
+    libxslt1-dev,
+    libpq-dev
+Standards-Version: 3.9.1
+
+Package: eng_education
+Architecture: all
+Depends: ${misc:Depends}, ${shlibs:Depends}, uwsgi-plugin-python, python-setuptools (>= 0.6b3)
+Description: eng_education
+ Main eng_education application
+
+Package: eng_education-static
+Architecture: all
+Depends: ${misc:Depends}
+Description: eng_education
+ Contains css, javascript and image files for eng_education

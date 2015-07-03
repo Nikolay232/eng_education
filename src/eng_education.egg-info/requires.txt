@@ -1,0 +1,8 @@
+django > 1.8, < 1.9
+psycopg2
+
+[develop]
+nose-subunit
+django-nose
+django-debug-toolbar
+ipdb
