@@ -16,7 +16,7 @@
 {% block body %}
 
 <body>
-	<nav class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -28,22 +28,18 @@
           <a class="navbar-brand" {% if request.path != '/' %}href="/"{% endif %}>Eng-education</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
-			{% if not request.user.is_anonymous %}
-			  <ul class="nav navbar-nav">
-                <li><a href="{% url 'profile_index' %}">Профиль пользователя</a></li>
-              </ul>
-            {% endif %}
+
 
           <ul class="nav navbar-nav pull-right">
 
 
             {% block login %}
-			    {% if request.user.is_anonymous %}
-				  <li><a href="/login/hhru-oauth2/">Войти</a></li>
-			    {% else %}
-			      <li><a href="{% url 'user_logout' %}">Выход</a></li>
-			    {% endif %}
-			{% endblock %}
+                {% if request.user.is_anonymous %}
+                  <li><a href="/login/hhru-oauth2/">Войти</a></li>
+                {% else %}
+                  <li><a href="{% url 'user_logout' %}">Выход</a></li>
+                {% endif %}
+            {% endblock %}
 
           </ul>
         </div><!--/.nav-collapse -->
@@ -54,11 +50,14 @@
       {% block body_content %}
 
         {% block title %}
-	    {% endblock title %}
+        {% endblock title %}
 
         <h3>Hello, user!</h3>
-        <a href="{% url 'word' pk=word_id %}">Получить слово</a>
-  	  {% endblock body_content %}
+        <a href="{% url 'word' pk=word_id %}">Получить русское слово</a>
+        <a href="{% url 'russian_word' pk=word_id %}">Получить английское слово</a>
+        <a href="{% url 'repeat_error_word' pk=repeat_word_id %}">Повторить слова</a>
+        <a href="{% url 'verb_view' pk=verb_id %}">Получить глагол</a>
+      {% endblock body_content %}
 
 
 </body>

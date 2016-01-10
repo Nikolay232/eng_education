@@ -8,7 +8,9 @@ CREATE TABLE "verbs_verb" (
     "past_simple" varchar(255) NOT NULL,
     "past_participle" varchar(255) NOT NULL,
     "rus" varchar(255) NOT NULL,
-    "publish" boolean NOT NULL
+    "publish" boolean NOT NULL,
+    "correct_amount" integer,
+    "incorrect_amount" integer
 )
 ;
 
@@ -16,6 +18,6 @@ GRANT SELECT, UPDATE, INSERT, DELETE ON verbs_verb TO role_rw;
 GRANT SELECT ON verbs_verb TO role_ro;
 GRANT SELECT, UPDATE ON verbs_verb_id_seq TO role_rw;
 
-CREATE INDEX "verbs_word_infinitive_like" ON "verbs_word" ("infinitive" varchar_pattern_ops);
+CREATE INDEX "verbs_verb_infinitive_like" ON "verbs_verb" ("infinitive" varchar_pattern_ops);
 
 COMMIT;

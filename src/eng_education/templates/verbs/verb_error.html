@@ -1,0 +1,11 @@
+{% extends "index.html" %}
+
+{% block body_content %}
+
+<br>
+  <br>
+    {{ verb.infinitive }}--{{ verb.past_simple }}--{{ verb.past_participle }} --- {{ verb.rus }}
+    <br>
+    <br>
+    <a href="{% url 'verb_view' pk=verb.id %}">Повторить</a>
+{% endblock body_content %}

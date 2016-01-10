@@ -39,10 +39,12 @@ USE_TZ = True
 MEDIA_ROOT = ''
 MEDIA_URL = ''
 
-STATIC_ROOT = '__static/'
+STATIC_ROOT = '/static/'
+# _PATH = os.path.abspath(os.path.dirname(__file__))
+# STATIC_ROOT = os.path.join(_PATH, 'files', 'static')
 STATIC_URL = '/static/'
+STATICFILES_DIRS = ('/home/niko/projects/eng_education/eng_education/src/eng_education/static',)
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
-
 
 ROOT_URLCONF = 'eng_education.urls'
 

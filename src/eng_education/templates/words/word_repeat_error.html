@@ -1,0 +1,15 @@
+{% extends "index.html" %}
+
+{% block body_content %}
+
+<br>
+  {% for theme in themes %}
+    {{ theme }}
+  {% endfor %}
+  <br>
+  <br>
+    {{ word.eng }} --- {{ word.rus }}
+    <br>
+    <br>
+    <a href="{% url 'repeat_error_word' pk=word.id %}">Повторить</a>
+{% endblock body_content %}

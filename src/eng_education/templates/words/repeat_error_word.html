@@ -6,7 +6,7 @@
   {% for theme in themes %}
     {{ theme }};
   {% endfor %}
-  <form class="profile-form" method="post" action="{% url 'word' pk=word_id %}" enctype="multipart/form-data">
+  <form name="myForm3" class="profile-form" method="post" action="{% url 'repeat_error_word' pk=word_id %}" enctype="multipart/form-data">
     {% csrf_token %}
 
     <p>{{ word.rus }}</p>

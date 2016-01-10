@@ -1,0 +1,7 @@
+{% extends "admin/change_list.html" %}
+{% block object-tools %}
+  <ul class="object-tools">
+    <li><a href="{% url 'import_verbs' %}" class="historylink">Импортировать глаголы</a></li>
+    <li><a href="add/" class="addlink">Добавить глагол</a></li>
+  </ul>
+{% endblock %}

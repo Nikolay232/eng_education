@@ -1,7 +1,7 @@
-SET search_path = 'eng_education';
+﻿SET search_path = 'eng_education';
 
 BEGIN;
 
-ALTER TABLE words_word ADD COLUMN amount integer default 0;
+UPDATE words_word_theme SET theme_id = 15 WHERE theme_id > 15 and theme_id < 20;
 
 COMMIT;
