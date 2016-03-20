@@ -76,7 +76,8 @@ class RepeatErrorWordView(View, WordMixin):
         if self.request.POST.get('eng_word') == self.get_check_word():
             self.word.increment_repeat_incorrect_amount()
             self.word.increment_count()
-            return HttpResponseRedirect(reverse('repeat_error_word', kwargs={'pk': Word.get_repeat_random_word(self.themes).id}))
+            return HttpResponseRedirect(reverse('repeat_error_word',
+                                                kwargs={'pk': Word.get_repeat_random_word(self.themes).id}))
         else:
             self.word.increment_incorrect_amount()
             return render(

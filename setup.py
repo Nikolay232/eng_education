@@ -10,7 +10,7 @@ else:
 
 
 requires = [
-    'django > 1.8, < 1.9',
+    'django > 1.8, < 1.8.9',
     'psycopg2'
 ]
 
